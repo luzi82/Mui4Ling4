@@ -19,5 +19,5 @@ virtualenv --python python3 venv
 source venv/bin/activate
 
 cd ffmpeg_to_storage
-./deploy.sh
+./deploy-gcf.sh
 ./test-gcf.sh
