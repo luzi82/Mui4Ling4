@@ -1,10 +1,7 @@
 import argparse
 import ffmpeg
-from google.cloud import storage
 import numpy
 import os
-import scipy.signal
-import scipy.stats
 import tempfile
 import futsu.json
 import futsu.gcp
@@ -65,19 +62,6 @@ def file_to_sample_np(filename):
     sample_np = sample_np/32768
     return sample_np
 
-def gcf_trigger_sample_np_to_chunk_list(data, context):
-    if 'attributes' not in data:
-        print("EHXAVCTXPR 'attributes' not in data")
-        return None
-    if 'input' not in data['attributes']:
-        print("IRVQBOUHPN 'input' not in data['attributes']")
-        return None
-    if 'output' not in data['attributes']:
-        print("LYRPCIBWOQ 'output' not in data['attributes']")
-        return None
-
-    gcf_sample_np_to_chunk_list(**data['attributes'])
-
 def audio_path_to_chunk_list_path(output, input):
     with tempfile.TemporaryDirectory() as tempdir:
         tmp_input = os.path.join(tempdir, 'input')
@@ -88,6 +72,22 @@ def audio_path_to_chunk_list_path(output, input):
         chunk_list = sample_np_to_chunk_list(sample_np)
         futsu.json.data_to_file(tmp_output, chunk_list)
         futsu.storage.local_to_path(output, tmp_output)
+
+def gcf_trigger_sample_np_to_chunk_list(data, context):
+    if 'attributes' not in data:
+        print("EHXAVCTXPR 'attributes' not in data")
+        return None
+    if 'input' not in data['attributes']:
+        print("IRVQBOUHPN 'input' not in data['attributes']")
+        return None
+    if 'output' not in data['attributes']:
+        print("LYRPCIBWOQ 'output' not in data['attributes']")
+        return None
+    if 'ext' not in data['attributes']:
+        print("BYWPPXXCAR 'ext' not in data['attributes']")
+        return None
+
+    gcf_sample_np_to_chunk_list(**data['attributes'])
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

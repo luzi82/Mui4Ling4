@@ -1,5 +1,4 @@
 ffmpeg-python==0.1.17
 google-cloud-storage
 numpy
-scipy
 futsu
